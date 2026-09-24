@@ -89,23 +89,102 @@ void tutupSemuaTab(CNode*& head) {
 
 // SOAL 1
 bool bukaHalaman(DNode*& head, DNode*& tail, int nomor) {
-    return false;
+    DNode *temp = new DNode;
+    temp->data = nomor;
+    temp->next = nullptr;
+    temp->prev = nullptr;
+
+    if (head == nullptr)
+    {
+        head = tail = temp;
+    } else
+    {
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+    return true;
 }
 
 // SOAL 2
 int riwayatMundur(DNode* tail, int* keluaran) {
-    return 0;
+    if (tail == nullptr)
+    {
+        return 0;
+    }
+    DNode *temp = tail;
+    int i = 0;
+    while (temp != nullptr)
+    {
+        keluaran[i] = temp->data;
+        i++;
+        temp = temp->prev;
+    }
+    return i;
 }
 
 // SOAL 3
 bool hapusHalaman(DNode*& head, DNode*& tail, int nomor) {
-    return false;
+    if (head == nullptr)
+    {
+        return false;
+    }
+
+    DNode *temp = head;
+    while (temp != nullptr && temp->data != nomor)
+    {
+        temp = temp->next;
+    }
+
+    if (temp != nullptr)
+    {
+        if (temp->prev != nullptr)
+        {
+            temp->prev->next = temp->next;
+        } else
+        {
+            head = temp->next;
+        }
+        
+        if (temp->next != nullptr)
+        {
+            temp->next->prev = temp->prev;
+        } else
+        {
+            tail = temp->prev;
+        }
+
+        delete temp;
+        return true;
+    } else
+    {
+        return false;
+    }
 }
 
 // SOAL 4
 bool bukaTab(CNode*& head, int nomor) {
-    return false;
+    CNode* newnode = new CNode;
+    newnode->data = nomor;
+
+    if(head == nullptr)
+    {
+        head = newnode;
+        head->next = head;
+        return true;
+    }
+    CNode* temp = head;
+    while (temp->next != head)
+    {
+        temp = temp->next;
+    }
+
+    temp->next = newnode;
+    newnode->next = head;
+
+    return true;
 }
+
 
 // =============================================================================
 // MAIN() — memeragakan pagi di loket. TIDAK dinilai, bebas diubah.
